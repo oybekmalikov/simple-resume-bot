@@ -1,3 +1,4 @@
+import http from 'http';
 import { Bot } from 'grammy';
 import { BOT_TOKEN } from './config.js';
 import { handleStart, handleLanguageCommand, handleTips, handleAbout } from './handlers/start.js';
@@ -34,6 +35,16 @@ bot.on('message:text', async (ctx) => {
   } else {
     await handleStart(ctx);
   }
+});
+
+const PORT = process.env.PORT || 3000;
+const server = http.createServer((_req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ status: 'ok', service: 'simple-resume-bot', uptime: process.uptime() }));
+});
+
+server.listen(PORT, () => {
+  console.log(`Bot health-check server running on port ${PORT}`);
 });
 
 if (BOT_TOKEN && !BOT_TOKEN.includes('SAMPLE_TOKEN') && !BOT_TOKEN.includes('your_telegram_bot_token')) {

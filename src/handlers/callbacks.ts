@@ -14,7 +14,7 @@ export async function handleCallbackQuery(ctx: Context) {
   const userId = ctx.from.id;
   const session = getSession(userId);
 
-  await ctx.answerCallbackQuery();
+  await ctx.answerCallbackQuery().catch(() => {});
 
   if (data === 'action_preview') {
     await handlePreview(ctx);
