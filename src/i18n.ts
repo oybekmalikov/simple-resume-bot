@@ -36,6 +36,7 @@ export interface BotTranslations {
     btnLanguage: string;
     btnTips: string;
     btnCoverLetter: string;
+    serverOffline: string;
 }
 
 export const BOT_I18N: Record<SupportedLang, BotTranslations> = {
@@ -97,6 +98,7 @@ Rezyume ma'lumotlaringiz asosida professional va kompaniyaga moslashtirilgan xat
         btnLanguage: '🌐 Tilni sozlash',
         btnTips: 'ℹ Maslahatlar',
         btnCoverLetter: '✉ Cover Letter',
+        serverOffline: `⚠️ <b>Backend server yoki xizmat ishlamayapti!</b>\n\nHozirda tizim serveriga ulanib bo'lmadi. Rezyume generatsiyasi, PDF yaratish va boshqa xizmatlar vaqtincha to'xtatilgan.\n\nIltimos, server ishga tushishini kuting yoki birozdan so'ng qayta urinib ko'ring.`,
     },
     ru: {
         welcome: (name) => `
@@ -156,6 +158,7 @@ Rezyume ma'lumotlaringiz asosida professional va kompaniyaga moslashtirilgan xat
         btnLanguage: '🌐 Язык',
         btnTips: 'ℹ Советы HR',
         btnCoverLetter: '✉ Cover Letter',
+        serverOffline: `⚠️ <b>Backend сервер недоступен!</b>\n\nВ данный момент нет соединения с сервером. Генерация резюме, предпросмотр и загрузка PDF временно недоступны.\n\nПожалуйста, подождите или повторите попытку позже.`,
     },
     en: {
         welcome: (name) => `
@@ -215,5 +218,6 @@ Draft a personalized cover letter matching your profile.`,
         btnLanguage: '🌐 Language',
         btnTips: 'ℹ HR Tips',
         btnCoverLetter: '✉ Cover Letter',
+        serverOffline: `⚠️ <b>Backend server is currently unavailable!</b>\n\nUnable to connect to the backend server right now. Resume preview, PDF generation, and other services are temporarily paused.\n\nPlease ensure the server is running or try again shortly.`,
     },
 };

@@ -10,10 +10,37 @@ import { handleCoverLetter } from './handlers/coverLetter.js';
 import { handleCallbackQuery } from './handlers/callbacks.js';
 import { getSession } from './session.js';
 
+import { checkBackendHealth } from './services/health.js';
+import { BOT_I18N } from './i18n.js';
+
 export const bot = new Bot(BOT_TOKEN || 'dummy_token');
 
 bot.catch((err) => {
   console.error(`⚠️ [Bot Error] on update ${err.ctx.update.update_id}:`, err.error);
+});
+
+// Middleware: Check if backend is alive before handling requests
+bot.use(async (ctx, next) => {
+  const isHealthy = await checkBackendHealth();
+  if (!isHealthy) {
+    const userId = ctx.from?.id;
+    const session = userId ? getSession(userId) : null;
+    const lang = session?.language || 'uz';
+    const message = BOT_I18N[lang]?.serverOffline || BOT_I18N['uz'].serverOffline;
+
+    if (ctx.callbackQuery) {
+      await ctx.answerCallbackQuery({
+        text: '⚠️ Backend yoki server ishlamayapti!',
+        show_alert: true,
+      }).catch(() => {});
+      return;
+    }
+
+    await ctx.reply(message, { parse_mode: 'HTML' });
+    return;
+  }
+
+  return next();
 });
 
 bot.command('start', handleStart);
